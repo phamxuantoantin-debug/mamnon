@@ -3,91 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bé Học Chữ Cái & Từ Vựng</title>
+    <title>Bé Học Chữ Cái - Tiếng Việt Chuẩn</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Quicksand', sans-serif;
-            background-color: #eef2f7;
+            background-color: #f0fdf4; /* Màu xanh lá nhẹ dịu mắt */
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 0;
             padding: 20px;
+            margin: 0;
         }
 
-        h1 { color: #2d3436; font-size: 2.2rem; margin-bottom: 5px; text-transform: uppercase; }
-        .sub-title { color: #636e72; margin-bottom: 30px; font-weight: 500; }
+        h1 { color: #15803d; font-size: 2.5rem; margin-bottom: 5px; text-shadow: 1px 1px white; }
+        .sub-title { color: #166534; margin-bottom: 30px; font-size: 1.2rem; }
 
         .alphabet-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
             max-width: 1100px;
             width: 100%;
         }
 
         .card {
             background: white;
-            border-radius: 25px;
-            padding: 25px 15px;
+            border-radius: 20px;
+            padding: 25px 10px;
             text-align: center;
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border: 3px solid transparent;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 8px 0 #dcfce7;
+            transition: all 0.2s ease;
+            border: 2px solid #f0fdf4;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: #74b9ff;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
+        .card:hover { transform: translateY(-5px); }
+        .card:active { transform: translateY(4px); box-shadow: 0 2px 0 #dcfce7; }
 
-        .card:active { transform: scale(0.95); }
-
-        .letter-box {
+        .letter {
             font-size: 4.5rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            color: #16a34a;
             line-height: 1;
+            margin-bottom: 8px;
+            display: block;
         }
 
-        .word-box {
-            font-size: 1.2rem;
-            color: #636e72;
-            background: #f1f2f6;
-            padding: 5px 15px;
-            border-radius: 15px;
+        .word {
+            font-size: 1.1rem;
+            color: #4b5563;
+            background: #f3f4f6;
+            padding: 4px 12px;
+            border-radius: 12px;
             display: inline-block;
         }
 
-        /* Màu sắc sinh động */
-        .card:nth-child(even) .letter-box { color: #ff7675; }
-        .card:nth-child(odd) .letter-box { color: #0984e3; }
-        .card:nth-child(3n) .letter-box { color: #6c5ce7; }
-        .card:nth-child(4n) .letter-box { color: #00b894; }
-
-        /* Hiệu ứng đang đọc */
+        /* Hiệu ứng khi đang phát âm */
         .speaking {
-            animation: pulse 1s infinite;
-            background: #fff9db !important;
-            border-color: #fab1a0 !important;
+            background: #fef9c3 !important;
+            border-color: #fde047 !important;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+        /* Màu sắc ngẫu nhiên cho chữ cái thêm sinh động */
+        .card:nth-child(5n+1) .letter { color: #ef4444; }
+        .card:nth-child(5n+2) .letter { color: #3b82f6; }
+        .card:nth-child(5n+3) .letter { color: #f59e0b; }
+        .card:nth-child(5n+4) .letter { color: #8b5cf6; }
+        .card:nth-child(5n+5) .letter { color: #10b981; }
     </style>
 </head>
 <body>
 
-    <h1>🅰️ BÉ GIỎI TIẾNG VIỆT</h1>
-    <p class="sub-title">Chạm vào chữ cái để nghe cô đọc âm và từ nhé!</p>
+    <h1>🅰️ BÉ HỌC CHỮ CÁI</h1>
+    <p class="sub-title">Bé chạm vào chữ để nghe cô đọc âm và từ nhé!</p>
 
     <div class="alphabet-grid" id="grid"></div>
 
@@ -95,19 +84,19 @@
         const alphabetData = [
             { l: 'a', s: 'a', w: 'con cá' },      { l: 'ă', s: 'á', w: 'con rắn' },
             { l: 'â', s: 'ớ', w: 'cái ấm' },     { l: 'b', s: 'bờ', w: 'con bò' },
-            { l: 'c', s: 'cờ', w: 'con cá' },     { l: 'd', s: 'dờ', w: 'con dế' },
+            { l: 'c', s: 'cờ', w: 'con cua' },    { l: 'd', s: 'dờ', w: 'con dế' },
             { l: 'đ', s: 'đờ', w: 'đu đủ' },     { l: 'e', s: 'e', w: 'xe bé' },
             { l: 'ê', s: 'ê', w: 'con bê' },      { l: 'g', s: 'gờ', w: 'con gà' },
             { l: 'h', s: 'hờ', w: 'hoa hồng' },   { l: 'i', s: 'i', w: 'viên bi' },
             { l: 'k', s: 'ca', w: 'cái ca' },     { l: 'l', s: 'lờ', w: 'quả lê' },
             { l: 'm', s: 'mờ', w: 'con mèo' },    { l: 'n', s: 'nờ', w: 'cái nơ' },
-            { l: 'o', s: 'o', w: 'con bò' },      { l: 'ô', s: 'ô', w: 'cái ô' },
-            { l: 'ơ', s: 'ơ', w: 'cái nơ' },      { l: 'p', s: 'pờ', w: 'đèn pin' },
-            { l: 'q', s: 'quờ', w: 'quả quít' },  { l: 'r', s: 'rờ', w: 'con rùa' },
-            { l: 's', s: 'sờ', w: 'ngôi sao' },   { l: 't', s: 'tờ', w: 'con tôm' },
+            { l: 'o', s: 'o', w: 'quả cọ' },      { l: 'ô', s: 'ô', w: 'cái ô' },
+            { l: 'ơ', s: 'ơ', w: 'lá cờ' },      { l: 'p', s: 'pờ', w: 'đèn pin' },
+            { l: 'q', s: 'quờ', w: 'quả quýt' },  { l: 'r', s: 'rờ', w: 'con rùa' },
+            { l: 's', s: 'xờ', w: 'ngôi sao' },   { l: 't', s: 'tờ', w: 'con tôm' },
             { l: 'u', s: 'u', w: 'cái tủ' },      { l: 'ư', s: 'ư', w: 'lá thư' },
             { l: 'v', s: 'vờ', w: 'con voi' },    { l: 'x', s: 'xờ', w: 'xe đạp' },
-            { l: 'y', s: 'i', w: 'cái yếm' }
+            { l: 'y', s: 'y', w: 'cái yếm' }
         ];
 
         const grid = document.getElementById('grid');
@@ -116,41 +105,52 @@
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
-                <div class="letter-box">${item.l}</div>
-                <div class="word-box">${item.w}</div>
+                <span class="letter">${item.l}</span>
+                <span class="word">${item.w}</span>
             `;
 
             card.onclick = () => {
-                // Xóa trạng thái đang đọc cũ
+                // Hủy phát âm cũ nếu bé bấm nhanh
+                window.speechSynthesis.cancel();
+                
+                // Hiệu ứng thị giác
                 document.querySelectorAll('.card').forEach(c => c.classList.remove('speaking'));
-                
-                // Thêm hiệu ứng cho thẻ đang được nhấn
                 card.classList.add('speaking');
-                
-                // Nội dung đọc: "Âm... Từ"
-                const textToSpeak = `${item.s}...... ${item.w}`;
-                speak(textToSpeak, card);
+
+                // Tạo nội dung đọc có khoảng nghỉ ngắt quãng để máy đọc rõ dấu
+                const textToSpeak = `${item.s} , , , , , , ${item.w}`;
+                playVietnameseVoice(textToSpeak, card);
             };
 
             grid.appendChild(card);
         });
 
-        function speak(text, cardElement) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Dừng các âm thanh khác
+        function playVietnameseVoice(text, cardElement) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // Tìm giọng đọc tiếng Việt tốt nhất
+            const voices = window.speechSynthesis.getVoices();
+            const viVoice = voices.find(v => v.lang.includes('vi') || v.name.includes('Vietnamese'));
 
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'vi-VN';
-                utterance.rate = 0.7;  // Đọc chậm rãi
-                utterance.pitch = 1.1; // Giọng hơi cao một chút để vui tươi
-
-                utterance.onend = () => {
-                    cardElement.classList.remove('speaking');
-                };
-
-                window.speechSynthesis.speak(utterance);
+            if (viVoice) {
+                utterance.voice = viVoice;
             }
+
+            utterance.lang = 'vi-VN';
+            utterance.rate = 0.75; // Đọc chậm để rõ dấu thanh
+            utterance.pitch = 1.1; // Giọng hơi cao một chút cho thân thiện
+
+            utterance.onend = () => {
+                cardElement.classList.remove('speaking');
+            };
+
+            window.speechSynthesis.speak(utterance);
         }
+
+        // Kích hoạt nạp giọng nói (Quan trọng cho Chrome)
+        window.speechSynthesis.onvoiceschanged = () => {
+            console.log("Đã nạp giọng đọc tiếng Việt");
+        };
     </script>
 </body>
 </html>
